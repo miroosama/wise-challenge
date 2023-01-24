@@ -1,12 +1,18 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Epochs from './view/Epochs/Epochs';
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: process.env.REACT_APP_NETWORK_HTTP_URI
+});
 
 function App() {
   return (
-    <div className="App">
-      Hello World
-    </div>
+    <ApolloProvider client={client}>
+      <Epochs />
+    </ApolloProvider>
   );
 }
 
