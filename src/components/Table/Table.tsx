@@ -10,19 +10,39 @@ import Box from '@mui/system/Box';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import { EPOCHES_TYPE_TO_STRING_MAPPING } from '../../contants';
+import CircularProgress from '@mui/material/CircularProgress';
+import styled from 'styled-components';
+
+const StyledSpinnerContainer = styled.div`
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+`;
 
 interface ITableComponentProps {
     epochsData?: GetEpochsQuery;
+    isLoading?: boolean;
     orderBy?: Epoch_OrderBy,
     orderDirection?: OrderDirection,
     handleSetSorting: (orderByArgs: Epoch_OrderBy, orderDirection: OrderDirection) => void;
 }
 
-const TableComponent: FC<ITableComponentProps> = ({epochsData, orderBy, orderDirection, handleSetSorting}) => {
+const TableComponent: FC<ITableComponentProps> = ({epochsData, isLoading, orderBy, orderDirection, handleSetSorting}) => {
 
     const onSetSorting = (objKey: string, orderDirectionArgs?: OrderDirection) => () => {
         handleSetSorting(objKey as Epoch_OrderBy, orderDirectionArgs === OrderDirection.Asc ? OrderDirection.Desc : OrderDirection.Asc);
     };
+
+    // return (
+    //     <TableContainer>
+    //         <Table stickyHeader aria-label="sticky table">
+    //             <CircularProgress />
+    //         </Table>
+    //     </TableContainer>
+    // )
 
     return (
         <TableContainer>
@@ -48,7 +68,7 @@ const TableComponent: FC<ITableComponentProps> = ({epochsData, orderBy, orderDir
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                {epochsData?.epoches.map((row) => (
+                {!isLoading ? epochsData?.epoches.map((row) => (
                     <TableRow
                         key={row.id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -59,7 +79,14 @@ const TableComponent: FC<ITableComponentProps> = ({epochsData, orderBy, orderDir
                             </TableCell>
                         )}
                     </TableRow>
-                ))}
+                )) : (
+                    <TableRow>
+                        <StyledSpinnerContainer>
+                            <CircularProgress />
+                        </StyledSpinnerContainer>
+                    </TableRow>
+                )}
+            
                 </TableBody>
             </Table>
         </TableContainer>

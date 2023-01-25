@@ -14,7 +14,7 @@ const useGetEpochsQuery = () => {
     const [orderBy, setOrderBy] = useState<Epoch_OrderBy>(Epoch_OrderBy.StartBlock);
     const [orderDirection, setOrderDirection] = useState<OrderDirection>(OrderDirection.Asc);
     
-    const { fetchMore, loading, data } = useQuery(
+    const { loading, data } = useQuery(
         GET_EPOCHS,
         { variables: { orderBy, orderDirection } }
     );

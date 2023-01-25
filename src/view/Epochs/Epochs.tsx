@@ -9,7 +9,7 @@ const Epochs: FC = () => {
     return (
         <Container>
             <h2>Epochs</h2>
-            <Table epochsData={data} orderBy={orderBy} orderDirection={orderDirection} handleSetSorting={handleSetSorting} />
+            <Table epochsData={data} isLoading={isLoading} orderBy={orderBy} orderDirection={orderDirection} handleSetSorting={handleSetSorting} />
         </Container>
     );
 }
