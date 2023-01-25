@@ -1,3 +1,5 @@
+export const ROWS_PER_PAGE_OPTION = 50;
+
 export const EPOCHES_TYPE_TO_STRING_MAPPING = {
     id: 'Id',
     startBlock: 'Start Block',

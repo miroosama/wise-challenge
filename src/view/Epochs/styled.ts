@@ -1,3 +1,4 @@
+import TablePagination from '@mui/material/TablePagination';
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -13,4 +14,8 @@ box-sizing: border-box;
 div {
     box-sizing: border-box;
 }
+`;
+
+export const StyledTablePagination = styled(TablePagination)`
+    overflow: hidden;
 `;

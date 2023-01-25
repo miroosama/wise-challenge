@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-    "\nquery GetEpochs ($orderBy: Epoch_orderBy, $orderDirection: OrderDirection) {\n  epoches (orderBy: $orderBy, orderDirection: $orderDirection) {\n    id\n    startBlock\n    endBlock\n    signalledTokens\n    stakeDeposited\n    totalQueryFees\n    taxedQueryFees\n    queryFeesCollected\n    curatorQueryFees\n    queryFeeRebates\n    totalRewards\n    totalIndexerRewards\n    totalDelegatorRewards\n  }\n}\n": types.GetEpochsDocument,
+    "\nquery GetEpochs ($orderBy: Epoch_orderBy, $orderDirection: OrderDirection, $limit: Int, $offset: Int,) {\n  epoches (orderBy: $orderBy, orderDirection: $orderDirection, first: $limit, skip: $offset) {\n    id\n    startBlock\n    endBlock\n    signalledTokens\n    stakeDeposited\n    totalQueryFees\n    taxedQueryFees\n    queryFeesCollected\n    curatorQueryFees\n    queryFeeRebates\n    totalRewards\n    totalIndexerRewards\n    totalDelegatorRewards\n  }\n}\n": types.GetEpochsDocument,
 };
 
 /**
@@ -33,7 +33,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\nquery GetEpochs ($orderBy: Epoch_orderBy, $orderDirection: OrderDirection) {\n  epoches (orderBy: $orderBy, orderDirection: $orderDirection) {\n    id\n    startBlock\n    endBlock\n    signalledTokens\n    stakeDeposited\n    totalQueryFees\n    taxedQueryFees\n    queryFeesCollected\n    curatorQueryFees\n    queryFeeRebates\n    totalRewards\n    totalIndexerRewards\n    totalDelegatorRewards\n  }\n}\n"): (typeof documents)["\nquery GetEpochs ($orderBy: Epoch_orderBy, $orderDirection: OrderDirection) {\n  epoches (orderBy: $orderBy, orderDirection: $orderDirection) {\n    id\n    startBlock\n    endBlock\n    signalledTokens\n    stakeDeposited\n    totalQueryFees\n    taxedQueryFees\n    queryFeesCollected\n    curatorQueryFees\n    queryFeeRebates\n    totalRewards\n    totalIndexerRewards\n    totalDelegatorRewards\n  }\n}\n"];
+export function gql(source: "\nquery GetEpochs ($orderBy: Epoch_orderBy, $orderDirection: OrderDirection, $limit: Int, $offset: Int,) {\n  epoches (orderBy: $orderBy, orderDirection: $orderDirection, first: $limit, skip: $offset) {\n    id\n    startBlock\n    endBlock\n    signalledTokens\n    stakeDeposited\n    totalQueryFees\n    taxedQueryFees\n    queryFeesCollected\n    curatorQueryFees\n    queryFeeRebates\n    totalRewards\n    totalIndexerRewards\n    totalDelegatorRewards\n  }\n}\n"): (typeof documents)["\nquery GetEpochs ($orderBy: Epoch_orderBy, $orderDirection: OrderDirection, $limit: Int, $offset: Int,) {\n  epoches (orderBy: $orderBy, orderDirection: $orderDirection, first: $limit, skip: $offset) {\n    id\n    startBlock\n    endBlock\n    signalledTokens\n    stakeDeposited\n    totalQueryFees\n    taxedQueryFees\n    queryFeesCollected\n    curatorQueryFees\n    queryFeeRebates\n    totalRewards\n    totalIndexerRewards\n    totalDelegatorRewards\n  }\n}\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

@@ -11,6 +11,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import { EPOCHES_TYPE_TO_STRING_MAPPING } from '../../contants';
 import Spinner from '../Spinner/Spinner';
+import styled from 'styled-components';
 
 interface ITableComponentProps {
     epochsData?: GetEpochsQuery;
@@ -20,6 +21,10 @@ interface ITableComponentProps {
     handleSetSorting: (orderByArgs: Epoch_OrderBy, orderDirection: OrderDirection) => void;
 }
 
+const StyledTableContainer = styled(TableContainer)`
+    height: calc(100% - 120px);
+`;
+
 const TableComponent: FC<ITableComponentProps> = ({epochsData, isLoading, orderBy, orderDirection, handleSetSorting}) => {
 
     const onSetSorting = (objKey: string, orderDirectionArgs?: OrderDirection) => () => {
@@ -27,7 +32,7 @@ const TableComponent: FC<ITableComponentProps> = ({epochsData, isLoading, orderB
     };
 
     return (
-        <TableContainer>
+        <StyledTableContainer>
             <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                     <TableRow>
@@ -68,7 +73,7 @@ const TableComponent: FC<ITableComponentProps> = ({epochsData, isLoading, orderB
                 )}
                 </TableBody>
             </Table>
-        </TableContainer>
+        </StyledTableContainer>
     );
 }
 
