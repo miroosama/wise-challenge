@@ -1,36 +1,15 @@
-import { useQuery } from '@apollo/client';
 import React, { FC } from 'react';
-import styled from 'styled-components';
-import { GET_EPOCHS } from '../../apollo/queries';
 import Table from '../../components/Table/Table';
-
-const Container = styled.div`
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    flex-flow: column;
-    padding: 24px 48px;
-
-    padding: 24px 48px;
-    box-sizing: border-box;
-
-    div {
-        box-sizing: border-box;
-    }
-`;
+import useGetEpochsQuery from '../../queryHooks/useGetEpochsQuery';
+import { Container } from './styled';
 
 const Epochs: FC = () => {
-    const { fetchMore, loading, data } = useQuery(
-        GET_EPOCHS,
-        { }
-      );
-    
-    console.log(data)
+    const { data, isLoading, orderBy, orderDirection, handleSetSorting } = useGetEpochsQuery();
     
     return (
         <Container>
             <h2>Epochs</h2>
-            <Table epochsData={data} />
+            <Table epochsData={data} orderBy={orderBy} orderDirection={orderDirection} handleSetSorting={handleSetSorting} />
         </Container>
     );
 }

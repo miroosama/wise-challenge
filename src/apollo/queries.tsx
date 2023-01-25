@@ -1,8 +1,8 @@
 import { gql } from '../__generated__/gql';
 
 export const GET_EPOCHS = gql(/* GraphQL */ `
-query GetEpochs{
-  epoches {
+query GetEpochs ($orderBy: Epoch_orderBy, $orderDirection: OrderDirection) {
+  epoches (orderBy: $orderBy, orderDirection: $orderDirection) {
     id
     startBlock
     endBlock

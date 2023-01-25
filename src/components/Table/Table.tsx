@@ -1,36 +1,50 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { GetEpochsQuery } from '../../__generated__/graphql';
+import { Epoch_OrderBy, GetEpochsQuery, OrderDirection } from '../../__generated__/graphql';
+import Box from '@mui/system/Box';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import { visuallyHidden } from '@mui/utils';
+import { EPOCHES_TYPE_TO_STRING_MAPPING } from '../../contants';
 
 interface ITableComponentProps {
     epochsData?: GetEpochsQuery;
+    orderBy?: Epoch_OrderBy,
+    orderDirection?: OrderDirection,
+    handleSetSorting: (orderByArgs: Epoch_OrderBy, orderDirection: OrderDirection) => void;
 }
 
-const TableComponent: FC<ITableComponentProps> = ({epochsData}) => {
+const TableComponent: FC<ITableComponentProps> = ({epochsData, orderBy, orderDirection, handleSetSorting}) => {
+
+    const onSetSorting = (objKey: string, orderDirectionArgs?: OrderDirection) => () => {
+        handleSetSorting(objKey as Epoch_OrderBy, orderDirectionArgs === OrderDirection.Asc ? OrderDirection.Desc : OrderDirection.Asc);
+    };
+
     return (
         <TableContainer>
             <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Id</TableCell>
-                        <TableCell>Start Block</TableCell>
-                        <TableCell>End Block</TableCell>
-                        <TableCell>Signalled Tokens</TableCell>
-                        <TableCell>Stake Deposited</TableCell>
-                        <TableCell>Total Query Fees</TableCell>
-                        <TableCell>Taxed Query Fees</TableCell>
-                        <TableCell>Query Fees Collected</TableCell>
-                        <TableCell>Curator Query Fees</TableCell>
-                        <TableCell>Query Fee Rebates</TableCell>
-                        <TableCell>Total Rewards</TableCell>
-                        <TableCell>Total Indexer Rewards</TableCell>
-                        <TableCell>Total Delegator Rewards</TableCell>
+                        {Object.keys(EPOCHES_TYPE_TO_STRING_MAPPING).map((objKey) =>
+                            <TableCell key={objKey}>
+                                <TableSortLabel
+                                    active={orderBy === objKey}
+                                    direction={orderBy === objKey ? orderDirection : 'asc'}
+                                    onClick={onSetSorting(objKey, orderDirection)}
+                                >
+                                    {EPOCHES_TYPE_TO_STRING_MAPPING[objKey]}
+                                    {orderBy === objKey ? (
+                                        <Box component="span" sx={visuallyHidden}>
+                                            {orderDirection === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                        </Box>
+                                    ) : null}
+                                </TableSortLabel>
+                            </TableCell>
+                        )}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -39,45 +53,11 @@ const TableComponent: FC<ITableComponentProps> = ({epochsData}) => {
                         key={row.id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                        <TableCell component="th" scope="row">
-                            {row.id}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.startBlock}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.endBlock}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.signalledTokens}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.stakeDeposited}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.totalQueryFees}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.taxedQueryFees}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.queryFeesCollected}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.curatorQueryFees}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.queryFeeRebates}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.totalRewards}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.totalIndexerRewards}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {row.totalDelegatorRewards}
-                        </TableCell>
+                        {Object.keys(EPOCHES_TYPE_TO_STRING_MAPPING).map((objKey) =>
+                            <TableCell key={objKey} component="th" scope="row">
+                                {row[objKey]}
+                            </TableCell>
+                        )}
                     </TableRow>
                 ))}
                 </TableBody>
