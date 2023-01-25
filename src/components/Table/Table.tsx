@@ -10,17 +10,7 @@ import Box from '@mui/system/Box';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import { EPOCHES_TYPE_TO_STRING_MAPPING } from '../../contants';
-import CircularProgress from '@mui/material/CircularProgress';
-import styled from 'styled-components';
-
-const StyledSpinnerContainer = styled.div`
-    height: 100%;
-    width: 100%;
-    margin: auto;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-`;
+import Spinner from '../Spinner/Spinner';
 
 interface ITableComponentProps {
     epochsData?: GetEpochsQuery;
@@ -35,14 +25,6 @@ const TableComponent: FC<ITableComponentProps> = ({epochsData, isLoading, orderB
     const onSetSorting = (objKey: string, orderDirectionArgs?: OrderDirection) => () => {
         handleSetSorting(objKey as Epoch_OrderBy, orderDirectionArgs === OrderDirection.Asc ? OrderDirection.Desc : OrderDirection.Asc);
     };
-
-    // return (
-    //     <TableContainer>
-    //         <Table stickyHeader aria-label="sticky table">
-    //             <CircularProgress />
-    //         </Table>
-    //     </TableContainer>
-    // )
 
     return (
         <TableContainer>
@@ -81,12 +63,9 @@ const TableComponent: FC<ITableComponentProps> = ({epochsData, isLoading, orderB
                     </TableRow>
                 )) : (
                     <TableRow>
-                        <StyledSpinnerContainer>
-                            <CircularProgress />
-                        </StyledSpinnerContainer>
+                        <Spinner />
                     </TableRow>
                 )}
-            
                 </TableBody>
             </Table>
         </TableContainer>
